@@ -54,7 +54,6 @@
             this.lblCodigo.Size = new System.Drawing.Size(67, 22);
             this.lblCodigo.TabIndex = 0;
             this.lblCodigo.Text = "Código";
-            this.lblCodigo.Click += new System.EventHandler(this.label1_Click);
             // 
             // lblNombre
             // 
@@ -85,7 +84,6 @@
             this.lblCategoria.Size = new System.Drawing.Size(88, 22);
             this.lblCategoria.TabIndex = 3;
             this.lblCategoria.Text = "Categoría";
-            this.lblCategoria.Click += new System.EventHandler(this.lblCategoria_Click);
             // 
             // lblPrecio
             // 
@@ -151,7 +149,6 @@
             this.pbxArticulo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxArticulo.TabIndex = 10;
             this.pbxArticulo.TabStop = false;
-            this.pbxArticulo.Click += new System.EventHandler(this.pbxArticulo_Click);
             // 
             // lblDescripcion
             // 
@@ -173,7 +170,6 @@
             this.txtDescripcion.Size = new System.Drawing.Size(869, 176);
             this.txtDescripcion.TabIndex = 12;
             this.txtDescripcion.TabStop = false;
-            this.txtDescripcion.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // btnVolver
             // 
@@ -212,6 +208,7 @@
             this.Name = "frmDetalle";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Detalle del Artículo";
+            this.Load += new System.EventHandler(this.frmDetalle_load);
             ((System.ComponentModel.ISupportInitialize)(this.pbxArticulo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -20,11 +20,6 @@ namespace Presentacion
             InitializeComponent();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
             listaArticulos = new List<Articulo>();
@@ -47,6 +42,14 @@ namespace Presentacion
             dgvArticulos.DataSource = listaArticulos;
 
             dgvArticulos.Columns["Id"].Visible = false;
+        }
+
+        private void btnVerDetalle_Click(object sender, EventArgs e)
+        {
+            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+            frmDetalle detalle = new frmDetalle(seleccionado);
+            detalle.ShowDialog();
         }
     }
 }

@@ -36,7 +36,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtFiltroRapido = new System.Windows.Forms.TextBox();
             this.pbxArticulo = new System.Windows.Forms.PictureBox();
-            this.btnDetalle = new System.Windows.Forms.Button();
+            this.btnVerDetalle = new System.Windows.Forms.Button();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
@@ -80,7 +80,7 @@
             // 
             this.dgvArticulos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvArticulos.Location = new System.Drawing.Point(15, 56);
+            this.dgvArticulos.Location = new System.Drawing.Point(15, 92);
             this.dgvArticulos.MultiSelect = false;
             this.dgvArticulos.Name = "dgvArticulos";
             this.dgvArticulos.ReadOnly = true;
@@ -93,7 +93,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 28);
+            this.label1.Location = new System.Drawing.Point(18, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(84, 16);
             this.label1.TabIndex = 2;
@@ -102,54 +102,54 @@
             // txtFiltroRapido
             // 
             this.txtFiltroRapido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFiltroRapido.Location = new System.Drawing.Point(103, 28);
+            this.txtFiltroRapido.Location = new System.Drawing.Point(109, 48);
             this.txtFiltroRapido.Name = "txtFiltroRapido";
             this.txtFiltroRapido.Size = new System.Drawing.Size(447, 22);
             this.txtFiltroRapido.TabIndex = 3;
-            this.txtFiltroRapido.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // pbxArticulo
             // 
             this.pbxArticulo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbxArticulo.Location = new System.Drawing.Point(1025, 161);
+            this.pbxArticulo.Location = new System.Drawing.Point(1025, 172);
             this.pbxArticulo.Name = "pbxArticulo";
             this.pbxArticulo.Size = new System.Drawing.Size(341, 246);
             this.pbxArticulo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxArticulo.TabIndex = 4;
             this.pbxArticulo.TabStop = false;
             // 
-            // btnDetalle
+            // btnVerDetalle
             // 
-            this.btnDetalle.Location = new System.Drawing.Point(16, 490);
-            this.btnDetalle.Name = "btnDetalle";
-            this.btnDetalle.Size = new System.Drawing.Size(75, 31);
-            this.btnDetalle.TabIndex = 5;
-            this.btnDetalle.Text = "Ver Detalle";
-            this.btnDetalle.UseVisualStyleBackColor = true;
+            this.btnVerDetalle.Location = new System.Drawing.Point(15, 541);
+            this.btnVerDetalle.Name = "btnVerDetalle";
+            this.btnVerDetalle.Size = new System.Drawing.Size(75, 43);
+            this.btnVerDetalle.TabIndex = 5;
+            this.btnVerDetalle.Text = "Ver Detalle";
+            this.btnVerDetalle.UseVisualStyleBackColor = true;
+            this.btnVerDetalle.Click += new System.EventHandler(this.btnVerDetalle_Click);
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(97, 490);
+            this.btnAgregar.Location = new System.Drawing.Point(96, 541);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(75, 31);
+            this.btnAgregar.Size = new System.Drawing.Size(75, 43);
             this.btnAgregar.TabIndex = 6;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(178, 490);
+            this.btnModificar.Location = new System.Drawing.Point(177, 541);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(95, 31);
+            this.btnModificar.Size = new System.Drawing.Size(95, 43);
             this.btnModificar.TabIndex = 7;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(279, 490);
+            this.btnEliminar.Location = new System.Drawing.Point(278, 541);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(75, 31);
+            this.btnEliminar.Size = new System.Drawing.Size(75, 43);
             this.btnEliminar.TabIndex = 8;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
@@ -162,7 +162,7 @@
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnAgregar);
-            this.Controls.Add(this.btnDetalle);
+            this.Controls.Add(this.btnVerDetalle);
             this.Controls.Add(this.pbxArticulo);
             this.Controls.Add(this.txtFiltroRapido);
             this.Controls.Add(this.label1);
@@ -192,7 +192,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtFiltroRapido;
         private System.Windows.Forms.PictureBox pbxArticulo;
-        private System.Windows.Forms.Button btnDetalle;
+        private System.Windows.Forms.Button btnVerDetalle;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnEliminar;
