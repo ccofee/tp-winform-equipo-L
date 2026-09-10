@@ -101,9 +101,10 @@
             // 
             // txtFiltroRapido
             // 
+            this.txtFiltroRapido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFiltroRapido.Location = new System.Drawing.Point(103, 28);
             this.txtFiltroRapido.Name = "txtFiltroRapido";
-            this.txtFiltroRapido.Size = new System.Drawing.Size(146, 22);
+            this.txtFiltroRapido.Size = new System.Drawing.Size(447, 22);
             this.txtFiltroRapido.TabIndex = 3;
             this.txtFiltroRapido.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
