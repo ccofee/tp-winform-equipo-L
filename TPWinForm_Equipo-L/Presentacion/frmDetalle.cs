@@ -17,6 +17,8 @@ namespace Presentacion
 
         private Articulo articulo;
 
+        private int indiceImagen = 0;
+
         public frmDetalle()
         {
             InitializeComponent();
@@ -49,16 +51,9 @@ namespace Presentacion
                 txtCategoria.Text = articulo.Categoria.Descripcion;
             }
 
-            //evaluacion de la imagen
-            if (articulo.Imagenes != null && articulo.Imagenes.Count > 0 && !string.IsNullOrEmpty(articulo.Imagenes[0].ImagenUrl))
-            {
-                CargarImagen(articulo.Imagenes[0].ImagenUrl);
-            }
-            else
-            {
-             //imageen por defecto si no hay imagenes
-                pbxArticulo.Image = Properties.Resources.sinfoto;
-            }
+            //inicializa el carrusel de imagenes
+            indiceImagen = 0;
+            MostrarImagenActual();
         }
 
 
@@ -75,6 +70,61 @@ namespace Presentacion
             }
         }
 
+        //metodo para mostrar la imagen actual segun el indice y botones de siguiente y anterior
+        private void MostrarImagenActual()
+        {
+            //si no hay o lalista esta vacia
+            if(articulo.Imagenes == null || articulo.Imagenes.Count == 0)
+            {
+                pbxArticulo.Image = Properties.Resources.sinfoto;
+                btnSiguiente.Enabled = false;
+                btnAnterior.Enabled = false;
+                lblContadorImagen.Text = "0 / 0";
+                return;
+            }
+
+            //si tiene una sola imagen
+            if(articulo.Imagenes.Count == 1)
+            {
+                btnAnterior.Enabled = false;
+                btnSiguiente.Enabled = false;
+            }
+            else
+            {
+                btnAnterior.Enabled = true;
+                btnSiguiente.Enabled = true;
+            }
+
+            lblContadorImagen.Text = $"{indiceImagen + 1} / {articulo.Imagenes.Count}";
+
+            CargarImagen(articulo.Imagenes[indiceImagen].ImagenUrl);
+        }
+
+
+        //boton anterior y siguiente para recorrer la lista de imagenes del objeto articulo
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
+            indiceImagen++;
+
+            if(indiceImagen >= articulo.Imagenes.Count)
+            {
+                indiceImagen = 0;
+            }
+
+            MostrarImagenActual();
+        }
+
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            indiceImagen--;
+
+            if(indiceImagen < 0)
+            {
+                indiceImagen = articulo.Imagenes.Count - 1;
+            }
+
+            MostrarImagenActual();
+        }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {

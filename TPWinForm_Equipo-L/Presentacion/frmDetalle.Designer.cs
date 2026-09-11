@@ -42,6 +42,9 @@
             this.lblDescripcion = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.btnAnterior = new System.Windows.Forms.Button();
+            this.btnSiguiente = new System.Windows.Forms.Button();
+            this.lblContadorImagen = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbxArticulo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -184,11 +187,43 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
+            // btnAnterior
+            // 
+            this.btnAnterior.Location = new System.Drawing.Point(619, 285);
+            this.btnAnterior.Name = "btnAnterior";
+            this.btnAnterior.Size = new System.Drawing.Size(75, 23);
+            this.btnAnterior.TabIndex = 13;
+            this.btnAnterior.Text = "<";
+            this.btnAnterior.UseVisualStyleBackColor = true;
+            this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
+            // 
+            // btnSiguiente
+            // 
+            this.btnSiguiente.Location = new System.Drawing.Point(785, 285);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(75, 23);
+            this.btnSiguiente.TabIndex = 14;
+            this.btnSiguiente.Text = ">";
+            this.btnSiguiente.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
+            // 
+            // lblContadorImagen
+            // 
+            this.lblContadorImagen.AutoSize = true;
+            this.lblContadorImagen.Location = new System.Drawing.Point(723, 292);
+            this.lblContadorImagen.Name = "lblContadorImagen";
+            this.lblContadorImagen.Size = new System.Drawing.Size(31, 16);
+            this.lblContadorImagen.TabIndex = 15;
+            this.lblContadorImagen.Text = "1 / 1";
+            // 
             // frmDetalle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 623);
+            this.Controls.Add(this.lblContadorImagen);
+            this.Controls.Add(this.btnSiguiente);
+            this.Controls.Add(this.btnAnterior);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.lblDescripcion);
@@ -231,5 +266,8 @@
         private System.Windows.Forms.Label lblDescripcion;
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Button btnAnterior;
+        private System.Windows.Forms.Button btnSiguiente;
+        private System.Windows.Forms.Label lblContadorImagen;
     }
 }
