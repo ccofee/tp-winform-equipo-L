@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,12 @@ namespace Negocio
         public SqlDataReader Lector { get { return lector; } }
 
 
-
+        //constructor
         public AccesoDatos()
         {
-            conexion = new SqlConnection();
+            string cadenaConexion = ConfigurationManager.AppSettings["cadena-conexion"];
+
+            conexion = new SqlConnection(cadenaConexion);
             comando = new SqlCommand();
         }
 
