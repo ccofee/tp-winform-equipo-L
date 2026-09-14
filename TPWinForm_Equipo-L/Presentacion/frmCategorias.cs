@@ -1,0 +1,118 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using Dominio;
+using Negocio;
+
+namespace Presentacion
+{
+    public partial class frmCategorias : Form
+    {
+        private List<Categoria> listaCategorias;
+
+        public frmCategorias()
+        {
+            InitializeComponent();
+        }
+
+        private void frmCategorias_Load(object sender, EventArgs e)
+        {
+            CargarListado();
+            Limpiar();
+        }
+
+        private void dgvCategorias_SelectionChanged(object sender, EventArgs e)
+        {
+            Categoria seleccionada = CategoriaSeleccionada();
+
+            if (seleccionada == null)
+                return;
+
+            txtDescripcion.Text = seleccionada.Descripcion;
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            if (!HayDescripcion())
+                return;
+
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            Categoria nueva = new Categoria();
+
+            nueva.Descripcion = txtDescripcion.Text.Trim();
+            negocio.Agregar(nueva);
+
+            CargarListado();
+            Limpiar();
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            Categoria seleccionada = CategoriaSeleccionada();
+
+            if (seleccionada == null)
+            {
+                MessageBox.Show("Seleccioná la categoría que querés modificar.", "Categorías");
+                return;
+            }
+
+            if (!HayDescripcion())
+                return;
+
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            Categoria modificada = new Categoria();
+
+            modificada.Id = seleccionada.Id;
+            modificada.Descripcion = txtDescripcion.Text.Trim();
+            negocio.Modificar(modificada);
+
+            CargarListado();
+            Limpiar();
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            Limpiar();
+        }
+
+        private void CargarListado()
+        {
+            CategoriaNegocio negocio = new CategoriaNegocio();
+
+            listaCategorias = negocio.Listar();
+            dgvCategorias.DataSource = null;
+            dgvCategorias.DataSource = listaCategorias;
+
+            dgvCategorias.Columns["Id"].Visible = false;
+            dgvCategorias.Columns["Descripcion"].HeaderText = "Categoría";
+        }
+
+        private Categoria CategoriaSeleccionada()
+        {
+            if (dgvCategorias.CurrentRow == null)
+                return null;
+
+            return dgvCategorias.CurrentRow.DataBoundItem as Categoria;
+        }
+
+        private bool HayDescripcion()
+        {
+            // Chequeo mínimo para no cargar categorías vacías. En el commit 7 esto pasa
+            // a resolverse con los helpers de Validacion.
+            if (txtDescripcion.Text.Trim() == "")
+            {
+                MessageBox.Show("Escribí la descripción de la categoría.", "Categorías");
+                txtDescripcion.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        private void Limpiar()
+        {
+            txtDescripcion.Text = "";
+            dgvCategorias.ClearSelection();
+        }
+    }
+}
