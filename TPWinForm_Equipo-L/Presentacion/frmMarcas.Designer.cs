@@ -30,6 +30,11 @@
         {
             this.lblTitulo = new System.Windows.Forms.Label();
             this.dgvMarcas = new System.Windows.Forms.DataGridView();
+            this.lblDescripcion = new System.Windows.Forms.Label();
+            this.txtDescripcion = new System.Windows.Forms.TextBox();
+            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnAgregar = new System.Windows.Forms.Button();
+            this.btnModificar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMarcas)).BeginInit();
             this.SuspendLayout();
             //
@@ -58,17 +63,76 @@
             this.dgvMarcas.ReadOnly = true;
             this.dgvMarcas.RowHeadersVisible = false;
             this.dgvMarcas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMarcas.Size = new System.Drawing.Size(512, 300);
+            this.dgvMarcas.Size = new System.Drawing.Size(512, 210);
             this.dgvMarcas.TabIndex = 1;
+            this.dgvMarcas.SelectionChanged += new System.EventHandler(this.dgvMarcas_SelectionChanged);
+            //
+            // lblDescripcion
+            //
+            this.lblDescripcion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblDescripcion.AutoSize = true;
+            this.lblDescripcion.Location = new System.Drawing.Point(24, 288);
+            this.lblDescripcion.Name = "lblDescripcion";
+            this.lblDescripcion.Size = new System.Drawing.Size(63, 13);
+            this.lblDescripcion.TabIndex = 2;
+            this.lblDescripcion.Text = "Descripción";
+            //
+            // txtDescripcion
+            //
+            this.txtDescripcion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDescripcion.Location = new System.Drawing.Point(110, 285);
+            this.txtDescripcion.MaxLength = 50;
+            this.txtDescripcion.Name = "txtDescripcion";
+            this.txtDescripcion.Size = new System.Drawing.Size(426, 20);
+            this.txtDescripcion.TabIndex = 3;
+            //
+            // btnLimpiar
+            //
+            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnLimpiar.Location = new System.Drawing.Point(24, 325);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(100, 30);
+            this.btnLimpiar.TabIndex = 4;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            //
+            // btnAgregar
+            //
+            this.btnAgregar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAgregar.Location = new System.Drawing.Point(330, 325);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(100, 30);
+            this.btnAgregar.TabIndex = 5;
+            this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            //
+            // btnModificar
+            //
+            this.btnModificar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnModificar.Location = new System.Drawing.Point(436, 325);
+            this.btnModificar.Name = "btnModificar";
+            this.btnModificar.Size = new System.Drawing.Size(100, 30);
+            this.btnModificar.TabIndex = 6;
+            this.btnModificar.Text = "Modificar";
+            this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             //
             // frmMarcas
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(560, 380);
+            this.Controls.Add(this.btnModificar);
+            this.Controls.Add(this.btnAgregar);
+            this.Controls.Add(this.btnLimpiar);
+            this.Controls.Add(this.txtDescripcion);
+            this.Controls.Add(this.lblDescripcion);
             this.Controls.Add(this.dgvMarcas);
             this.Controls.Add(this.lblTitulo);
-            this.MinimumSize = new System.Drawing.Size(420, 300);
+            this.MinimumSize = new System.Drawing.Size(450, 400);
             this.Name = "frmMarcas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Marcas";
@@ -82,5 +146,10 @@
 
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.DataGridView dgvMarcas;
+        private System.Windows.Forms.Label lblDescripcion;
+        private System.Windows.Forms.TextBox txtDescripcion;
+        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.Button btnAgregar;
+        private System.Windows.Forms.Button btnModificar;
     }
 }
