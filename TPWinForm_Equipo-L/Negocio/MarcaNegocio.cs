@@ -33,6 +33,14 @@ namespace Negocio
                 existente.Descripcion = marca.Descripcion;
         }
 
+        public void Eliminar(int id)
+        {
+            Marca existente = marcas.Find(x => x.Id == id);
+
+            if (existente != null)
+                marcas.Remove(existente);
+        }
+
         private int ProximoId()
         {
             // Imita el IDENTITY de la tabla MARCAS.

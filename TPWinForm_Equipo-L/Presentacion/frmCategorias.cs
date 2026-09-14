@@ -70,6 +70,33 @@ namespace Presentacion
             Limpiar();
         }
 
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Categoria seleccionada = CategoriaSeleccionada();
+
+            if (seleccionada == null)
+            {
+                MessageBox.Show("Seleccioná la categoría que querés eliminar.", "Categorías");
+                return;
+            }
+
+            DialogResult respuesta = MessageBox.Show(
+                "¿Querés eliminar la categoría " + seleccionada.Descripcion + "?",
+                "Eliminar categoría",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (respuesta != DialogResult.Yes)
+                return;
+
+            CategoriaNegocio negocio = new CategoriaNegocio();
+
+            negocio.Eliminar(seleccionada.Id);
+
+            CargarListado();
+            Limpiar();
+        }
+
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             Limpiar();

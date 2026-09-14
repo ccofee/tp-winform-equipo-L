@@ -33,6 +33,14 @@ namespace Negocio
                 existente.Descripcion = categoria.Descripcion;
         }
 
+        public void Eliminar(int id)
+        {
+            Categoria existente = categorias.Find(x => x.Id == id);
+
+            if (existente != null)
+                categorias.Remove(existente);
+        }
+
         private int ProximoId()
         {
             // Imita el IDENTITY de la tabla CATEGORIAS.

@@ -70,6 +70,33 @@ namespace Presentacion
             Limpiar();
         }
 
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Marca seleccionada = MarcaSeleccionada();
+
+            if (seleccionada == null)
+            {
+                MessageBox.Show("Seleccioná la marca que querés eliminar.", "Marcas");
+                return;
+            }
+
+            DialogResult respuesta = MessageBox.Show(
+                "¿Querés eliminar la marca " + seleccionada.Descripcion + "?",
+                "Eliminar marca",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (respuesta != DialogResult.Yes)
+                return;
+
+            MarcaNegocio negocio = new MarcaNegocio();
+
+            negocio.Eliminar(seleccionada.Id);
+
+            CargarListado();
+            Limpiar();
+        }
+
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             Limpiar();
