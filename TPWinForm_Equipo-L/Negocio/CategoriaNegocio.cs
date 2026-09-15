@@ -1,71 +1,91 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Dominio;
 
 namespace Negocio
 {
     public class CategoriaNegocio
     {
-        // Etapa 1: las categorías viven en memoria mientras corre la aplicación, para poder
-        // probar el alta y la modificación sin base de datos. En la Etapa 2 el cuerpo de
-        // los tres métodos pasa a consultar la tabla CATEGORIAS de CATALOGO_P3_DB y esta
-        // lista desaparece; las firmas quedan igual, así frmCategorias no se toca.
-        private static List<Categoria> categorias = CargarDatosDePrueba();
-
         public List<Categoria> Listar()
         {
-            // Devuelve una copia para que el formulario no modifique la lista por error.
-            // Cuando esto consulte la base también va a devolver una lista nueva en cada
-            // llamada, así que el comportamiento no cambia.
-            return new List<Categoria>(categorias);
+            List<Categoria> lista = new List<Categoria>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("SELECT Id, Descripcion FROM CATEGORIAS");
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Categoria aux = new Categoria();
+
+                    aux.Id = (int)datos.Lector["Id"];
+
+                    // Descripcion admite NULL en la tabla CATEGORIAS.
+                    if (!(datos.Lector["Descripcion"] is DBNull))
+                        aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    else
+                        aux.Descripcion = string.Empty;
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
 
         public void Agregar(Categoria nueva)
         {
-            nueva.Id = ProximoId();
-            categorias.Add(nueva);
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("INSERT INTO CATEGORIAS (Descripcion) VALUES (@descripcion)");
+                datos.setearParametro("@descripcion", nueva.Descripcion);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
 
         public void Modificar(Categoria categoria)
         {
-            Categoria existente = categorias.Find(x => x.Id == categoria.Id);
+            AccesoDatos datos = new AccesoDatos();
 
-            if (existente != null)
-                existente.Descripcion = categoria.Descripcion;
+            try
+            {
+                datos.SetearConsulta("UPDATE CATEGORIAS SET Descripcion = @descripcion WHERE Id = @id");
+                datos.setearParametro("@descripcion", categoria.Descripcion);
+                datos.setearParametro("@id", categoria.Id);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
 
         public void Eliminar(int id)
         {
-            Categoria existente = categorias.Find(x => x.Id == id);
+            AccesoDatos datos = new AccesoDatos();
 
-            if (existente != null)
-                categorias.Remove(existente);
-        }
-
-        private int ProximoId()
-        {
-            // Imita el IDENTITY de la tabla CATEGORIAS.
-            int mayor = 0;
-
-            foreach (Categoria categoria in categorias)
+            try
             {
-                if (categoria.Id > mayor)
-                    mayor = categoria.Id;
+                datos.SetearConsulta("DELETE FROM CATEGORIAS WHERE Id = @id");
+                datos.setearParametro("@id", id);
+                datos.ejecutarAccion();
             }
-
-            return mayor + 1;
-        }
-
-        private static List<Categoria> CargarDatosDePrueba()
-        {
-            // Mismos Id y descripciones que trae el script de la cátedra.
-            List<Categoria> lista = new List<Categoria>();
-
-            lista.Add(new Categoria { Id = 1, Descripcion = "Celulares" });
-            lista.Add(new Categoria { Id = 2, Descripcion = "Televisores" });
-            lista.Add(new Categoria { Id = 3, Descripcion = "Media" });
-            lista.Add(new Categoria { Id = 4, Descripcion = "Audio" });
-
-            return lista;
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }
