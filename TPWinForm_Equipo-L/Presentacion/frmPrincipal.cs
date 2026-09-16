@@ -24,6 +24,7 @@ namespace Presentacion
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
             cargar();
+            cargarDesplegables();
         }
 
 
@@ -43,10 +44,46 @@ namespace Presentacion
         }
 
 
+        private void cargarDesplegables()
+        {
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+
+            try
+            {
+                
+                cboMarca.DropDownStyle = ComboBoxStyle.DropDownList;
+                cboCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
+
+                
+                cboMarca.DataSource = marcaNegocio.Listar();
+                cboMarca.ValueMember = "Id";
+                cboMarca.DisplayMember = "Descripcion";
+                cboMarca.SelectedIndex = -1;
+
+                cboCategoria.DataSource = categoriaNegocio.Listar();
+                cboCategoria.ValueMember = "Id";
+                cboCategoria.DisplayMember = "Descripcion";
+                cboCategoria.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Aviso al cargar desplegables: " + ex.Message);
+            }
+
+        }
+
         private void ocultarColumnas()
         {
             if (dgvArticulos.Columns["Id"] != null)
                 dgvArticulos.Columns["Id"].Visible = false;
+
+            //formato de precio a moneda
+            if (dgvArticulos.Columns["Precio"] != null)
+            {
+                dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C2";
+                dgvArticulos.Columns["Precio"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
         }
 
 
@@ -115,6 +152,68 @@ namespace Presentacion
             ocultarColumnas();
 
         }
-    }
 
+        private void btnBuscarAvanzado_Click(object sender, EventArgs e)
+        {
+
+            ArticuloNegocio negocio = new ArticuloNegocio();
+
+            try
+            {
+                //marca
+                string idMarca = "";
+                if (cboMarca.SelectedIndex != -1)
+                {
+                    Marca seleccionada = (Marca)cboMarca.SelectedItem;
+                    idMarca = seleccionada.Id.ToString();
+                }
+                //categoria
+                string idCategoria = "";
+                if (cboCategoria.SelectedIndex != -1)
+                {
+                    Categoria seleccionada = (Categoria)cboCategoria.SelectedItem;
+                    idCategoria = seleccionada.Id.ToString();
+                }
+
+                //rango de precios
+                string min = txtPrecioMin.Text;
+                string max = txtPrecioMax.Text;
+
+                //desvinculada anterior, me tiro unos errores
+                dgvArticulos.DataSource = null;
+
+                //vinculo los resultados filtrados al dgv
+                dgvArticulos.DataSource = negocio.filtrar(idMarca, idCategoria, min, max);
+
+                ocultarColumnas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error en la búsqueda avanzada: " + ex.Message);
+            }
+        }
+
+
+        private void controlFiltro_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnBuscarAvanzado.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void btnLimpiarFiltro_Click(object sender, EventArgs e)
+        {
+            cboMarca.SelectedIndex = -1;
+            cboCategoria.SelectedIndex = -1;
+            txtPrecioMin.Clear();
+            txtPrecioMax.Clear();
+            txtFiltroRapido.Clear();
+            
+            cargar();
+        }
+
+    }
 }

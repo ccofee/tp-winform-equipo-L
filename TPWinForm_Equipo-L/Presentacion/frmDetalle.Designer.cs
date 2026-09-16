@@ -189,6 +189,7 @@
             // 
             // btnAnterior
             // 
+            this.btnAnterior.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnAnterior.Location = new System.Drawing.Point(619, 285);
             this.btnAnterior.Name = "btnAnterior";
             this.btnAnterior.Size = new System.Drawing.Size(75, 23);
@@ -199,6 +200,7 @@
             // 
             // btnSiguiente
             // 
+            this.btnSiguiente.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnSiguiente.Location = new System.Drawing.Point(785, 285);
             this.btnSiguiente.Name = "btnSiguiente";
             this.btnSiguiente.Size = new System.Drawing.Size(75, 23);
@@ -220,6 +222,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnVolver;
             this.ClientSize = new System.Drawing.Size(915, 623);
             this.Controls.Add(this.lblContadorImagen);
             this.Controls.Add(this.btnSiguiente);
