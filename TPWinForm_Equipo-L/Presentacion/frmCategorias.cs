@@ -124,9 +124,7 @@ namespace Presentacion
 
         private bool HayDescripcion()
         {
-            // Chequeo mínimo para no cargar categorías vacías. En el commit 7 esto pasa
-            // a resolverse con los helpers de Validacion.
-            if (txtDescripcion.Text.Trim() == "")
+            if (!Validacion.TieneTexto(txtDescripcion.Text))
             {
                 MessageBox.Show("Escribí la descripción de la categoría.", "Categorías");
                 txtDescripcion.Focus();
