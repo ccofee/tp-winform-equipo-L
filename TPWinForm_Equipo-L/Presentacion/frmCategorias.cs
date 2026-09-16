@@ -80,6 +80,21 @@ namespace Presentacion
                 return;
             }
 
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            int cantidad = negocio.ContarArticulos(seleccionada.Id);
+
+            if (cantidad > 0)
+            {
+                string detalle = cantidad == 1 ? "la usa 1 artículo" : "la usan " + cantidad + " artículos";
+
+                MessageBox.Show(
+                    "No se puede eliminar la categoría " + seleccionada.Descripcion + ": " + detalle + ".",
+                    "Eliminar categoría",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             DialogResult respuesta = MessageBox.Show(
                 "¿Querés eliminar la categoría " + seleccionada.Descripcion + "?",
                 "Eliminar categoría",
@@ -88,8 +103,6 @@ namespace Presentacion
 
             if (respuesta != DialogResult.Yes)
                 return;
-
-            CategoriaNegocio negocio = new CategoriaNegocio();
 
             negocio.Eliminar(seleccionada.Id);
 

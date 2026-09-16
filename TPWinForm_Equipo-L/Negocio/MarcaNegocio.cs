@@ -72,6 +72,27 @@ namespace Negocio
             }
         }
 
+        // Cuenta los artículos que usan la marca. La base no tiene foreign keys, así que
+        // este chequeo es lo único que evita dejar artículos apuntando a un IdMarca inexistente.
+        public int ContarArticulos(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("SELECT COUNT(*) FROM ARTICULOS WHERE IdMarca = @id");
+                datos.setearParametro("@id", id);
+                datos.EjecutarLectura();
+
+                datos.Lector.Read();
+                return (int)datos.Lector[0];
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void Eliminar(int id)
         {
             AccesoDatos datos = new AccesoDatos();

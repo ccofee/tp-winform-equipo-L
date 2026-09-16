@@ -80,6 +80,21 @@ namespace Presentacion
                 return;
             }
 
+            MarcaNegocio negocio = new MarcaNegocio();
+            int cantidad = negocio.ContarArticulos(seleccionada.Id);
+
+            if (cantidad > 0)
+            {
+                string detalle = cantidad == 1 ? "la usa 1 artículo" : "la usan " + cantidad + " artículos";
+
+                MessageBox.Show(
+                    "No se puede eliminar la marca " + seleccionada.Descripcion + ": " + detalle + ".",
+                    "Eliminar marca",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             DialogResult respuesta = MessageBox.Show(
                 "¿Querés eliminar la marca " + seleccionada.Descripcion + "?",
                 "Eliminar marca",
@@ -88,8 +103,6 @@ namespace Presentacion
 
             if (respuesta != DialogResult.Yes)
                 return;
-
-            MarcaNegocio negocio = new MarcaNegocio();
 
             negocio.Eliminar(seleccionada.Id);
 
