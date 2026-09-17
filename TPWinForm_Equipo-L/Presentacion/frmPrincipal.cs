@@ -234,5 +234,17 @@ namespace Presentacion
             ventana.ShowDialog();
             cargarDesplegables();
         }
+
+        private void agregarArtículoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAltaArticulo alta = new frmAltaArticulo();
+            alta.ShowDialog();
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            frmAltaArticulo alta = new frmAltaArticulo();
+            alta.ShowDialog();
+        }
     }
 }

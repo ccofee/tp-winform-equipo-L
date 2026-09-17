@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.articulosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.agregarArtículoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.marcasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.categoríasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvArticulos = new System.Windows.Forms.DataGridView();
@@ -73,9 +74,18 @@
             // 
             // articulosToolStripMenuItem
             // 
+            this.articulosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.agregarArtículoToolStripMenuItem});
             this.articulosToolStripMenuItem.Name = "articulosToolStripMenuItem";
             this.articulosToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.articulosToolStripMenuItem.Text = "Articulos";
+            // 
+            // agregarArtículoToolStripMenuItem
+            // 
+            this.agregarArtículoToolStripMenuItem.Name = "agregarArtículoToolStripMenuItem";
+            this.agregarArtículoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.agregarArtículoToolStripMenuItem.Text = "&Agregar Artículo";
+            this.agregarArtículoToolStripMenuItem.Click += new System.EventHandler(this.agregarArtículoToolStripMenuItem_Click);
             // 
             // marcasToolStripMenuItem
             // 
@@ -161,6 +171,7 @@
             this.btnAgregar.TabIndex = 6;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btnModificar
             // 
@@ -345,6 +356,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripMenuItem agregarArtículoToolStripMenuItem;
     }
 }
 
