@@ -64,6 +64,8 @@ namespace Presentacion
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+
             if (articulo == null)
             {
                 Articulo nuevo = new Articulo();
@@ -75,14 +77,25 @@ namespace Presentacion
                 nuevo.Marca = (Marca)cboMarca.SelectedItem;
                 nuevo.Categoria = (Categoria)cboCategoria.SelectedItem;
 
-                ArticuloNegocio negocio = new ArticuloNegocio();
-
                 nuevo.Id = negocio.agregar(nuevo);
 
                 MessageBox.Show("Artículo agregado correctamente. Id: " + nuevo.Id);
-
-                Close();
             }
+            else
+            {
+                articulo.Codigo = txtCodigo.Text;
+                articulo.Nombre = txtNombre.Text;
+                articulo.Descripcion = txtDescripcion.Text;
+                articulo.Precio = decimal.Parse(txtPrecio.Text);
+                articulo.Marca = (Marca)cboMarca.SelectedItem;
+                articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
+
+                negocio.modificar(articulo);
+
+                MessageBox.Show("Artículo modificado correctamente.");
+            }
+
+            Close();
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
