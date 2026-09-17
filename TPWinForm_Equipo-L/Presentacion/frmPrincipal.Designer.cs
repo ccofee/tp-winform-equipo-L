@@ -83,7 +83,7 @@
             // agregarArtículoToolStripMenuItem
             // 
             this.agregarArtículoToolStripMenuItem.Name = "agregarArtículoToolStripMenuItem";
-            this.agregarArtículoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.agregarArtículoToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
             this.agregarArtículoToolStripMenuItem.Text = "&Agregar Artículo";
             this.agregarArtículoToolStripMenuItem.Click += new System.EventHandler(this.agregarArtículoToolStripMenuItem_Click);
             // 
@@ -181,6 +181,7 @@
             this.btnModificar.TabIndex = 7;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnEliminar
             // 
@@ -190,6 +191,7 @@
             this.btnEliminar.TabIndex = 8;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // gbBusquedaAvanzada
             // 

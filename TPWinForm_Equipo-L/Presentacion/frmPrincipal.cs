@@ -239,12 +239,66 @@ namespace Presentacion
         {
             frmAltaArticulo alta = new frmAltaArticulo();
             alta.ShowDialog();
+            cargar();
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             frmAltaArticulo alta = new frmAltaArticulo();
             alta.ShowDialog();
+            cargar();
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            if (dgvArticulos.CurrentRow == null)
+            {
+                MessageBox.Show("Por favor, seleccione un artículo de la grilla para modificar.");
+                return;
+            }
+
+            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+            frmAltaArticulo modificar = new frmAltaArticulo(seleccionado);
+            modificar.ShowDialog();
+
+            cargar();
+
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (dgvArticulos.CurrentRow == null)
+            {
+                MessageBox.Show("Por favor, seleccione un artículo de la grilla para eliminar.");
+                return;
+            }
+
+            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+            //dialogo de confirmacion
+            DialogResult respuesta = MessageBox.Show(
+                "¿Está seguro de eliminar físicamente el artículo \"" + seleccionado.Nombre + "\"?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (respuesta == DialogResult.Yes)
+            {
+                try
+                {
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    negocio.eliminar(seleccionado.Id);
+
+                    MessageBox.Show("Artículo eliminado correctamente.");
+                    cargar();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al intentar eliminar el artículo: " + ex.Message);
+                }
+            }
         }
     }
 }

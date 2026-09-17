@@ -99,6 +99,10 @@ namespace Negocio
                         aux.Categoria.Descripcion = "Sin Categoría";
                     }
 
+                    //carga de imagen
+                    ImagenNegocio imagenNegocio = new ImagenNegocio();
+                    aux.Imagenes = imagenNegocio.listarPorArticulo(aux.Id);
+
                     lista.Add(aux);
                 }
 
