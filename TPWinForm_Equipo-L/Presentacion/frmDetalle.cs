@@ -33,6 +33,10 @@ namespace Presentacion
 
         public void frmDetalle_load(object sender, EventArgs e)
         {
+            //los botones cerraban la ventana
+            btnSiguiente.DialogResult = DialogResult.None;
+            btnAnterior.DialogResult = DialogResult.None;
+
             //cargar los datos del objeto recibido en los controles del formulario
             txtCodigo.Text = articulo.Codigo;
             txtNombre.Text = articulo.Nombre;
@@ -104,11 +108,11 @@ namespace Presentacion
         //boton anterior y siguiente para recorrer la lista de imagenes del objeto articulo
         private void btnAnterior_Click(object sender, EventArgs e)
         {
-            indiceImagen++;
+            indiceImagen--;
 
-            if(indiceImagen >= articulo.Imagenes.Count)
+            if(indiceImagen < 0)
             {
-                indiceImagen = 0;
+                indiceImagen = articulo.Imagenes.Count - 1;
             }
 
             MostrarImagenActual();
@@ -116,11 +120,11 @@ namespace Presentacion
 
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
-            indiceImagen--;
+            indiceImagen++;
 
-            if(indiceImagen < 0)
+            if(indiceImagen >= articulo.Imagenes.Count)
             {
-                indiceImagen = articulo.Imagenes.Count - 1;
+                indiceImagen = 0;
             }
 
             MostrarImagenActual();

@@ -43,6 +43,20 @@ namespace Presentacion
             }
         }
 
+        private void cargarImagen(string url)
+        {
+            try
+            {
+                pbxArticulo.Load(url);
+            }
+            catch (Exception)
+            {
+
+                pbxArticulo.Image = Properties.Resources.sinfoto;
+            }
+        }
+
+
 
         private void cargarDesplegables()
         {
@@ -87,6 +101,7 @@ namespace Presentacion
         }
 
 
+
         private void btnVerDetalle_Click(object sender, EventArgs e)
         {
 
@@ -95,36 +110,7 @@ namespace Presentacion
 
             Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
 
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // DATOS DE PRUEBA: inyectar imágenes temporales antes de abrir el detalle (BORRAR AL CONECTAR LA BD)
-
-            if (seleccionado.Imagenes == null)
-                seleccionado.Imagenes = new List<Imagen>();
-
-            seleccionado.Imagenes.Clear();
-
-            switch (seleccionado.Codigo?.Trim().ToUpper())
-            {
-                case "A01":
-                    seleccionado.Imagenes.Add(new Imagen { ImagenUrl = "https://picsum.photos/id/237/500/400" }); // Perro
-                    seleccionado.Imagenes.Add(new Imagen { ImagenUrl = "https://picsum.photos/id/0/500/400" });   // Laptop
-                    break;
-
-                case "A02":
-                    seleccionado.Imagenes.Add(new Imagen { ImagenUrl = "https://picsum.photos/id/1060/500/400" }); // Café
-                    seleccionado.Imagenes.Add(new Imagen { ImagenUrl = "https://picsum.photos/id/24/500/400" });   // Libro
-                    break;
-
-                default:
-                    seleccionado.Imagenes.Add(new Imagen { ImagenUrl = "https://picsum.photos/id/250/500/400" }); // Cámara
-                    seleccionado.Imagenes.Add(new Imagen { ImagenUrl = "https://picsum.photos/id/175/500/400" }); // Reloj
-                    break;
-            }
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            //esto queda
+            //se instancia el detalle y se le pasa el articulo seleccionado
             frmDetalle detalle = new frmDetalle(seleccionado);
             detalle.ShowDialog();
         }
@@ -215,5 +201,24 @@ namespace Presentacion
             cargar();
         }
 
+        private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvArticulos.CurrentRow == null)
+            {
+                return;
+            }
+
+            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+            if(seleccionado.Imagenes != null && seleccionado.Imagenes.Count > 0)
+            {
+                cargarImagen(seleccionado.Imagenes[0].ImagenUrl);
+            }
+            else
+            {
+                pbxArticulo.Image = Properties.Resources.sinfoto;
+            }
+
+        }
     }
 }
