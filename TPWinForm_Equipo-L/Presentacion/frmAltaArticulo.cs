@@ -64,10 +64,45 @@ namespace Presentacion
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            if (!Validacion.TieneTexto(txtCodigo.Text))
+            {
+                MessageBox.Show("Debe ingresar un código.");
+                return;
+            }
+
+            if (!Validacion.TieneTexto(txtNombre.Text))
+            {
+                MessageBox.Show("Debe ingresar un nombre.");
+                return;
+            }
+
+            if (!Validacion.TieneTexto(txtDescripcion.Text))
+            {
+                MessageBox.Show("Debe ingresar una descripción.");
+                return;
+            }
+
+            if (!Validacion.EsPrecio(txtPrecio.Text))
+            {
+                MessageBox.Show("Debe ingresar un precio válido.");
+                return;
+            }
+
+            if (cboMarca.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar una marca.");
+                return;
+            }
+
+            if (cboCategoria.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar una categoría.");
+                return;
+            }
             ArticuloNegocio negocio = new ArticuloNegocio();
 
             if (articulo == null)
-            {
+            { 
                 Articulo nuevo = new Articulo();
 
                 nuevo.Codigo = txtCodigo.Text;
