@@ -38,6 +38,8 @@
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
             this.btnAnterior = new System.Windows.Forms.Button();
+            this.pbImagen = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
             this.SuspendLayout();
             // 
             // txtImagenUrl
@@ -55,6 +57,7 @@
             this.txtImagenLink.Name = "txtImagenLink";
             this.txtImagenLink.Size = new System.Drawing.Size(430, 20);
             this.txtImagenLink.TabIndex = 1;
+            this.txtImagenLink.TextChanged += new System.EventHandler(this.txtImagenLink_TextChanged);
             // 
             // btnAgregar
             // 
@@ -132,11 +135,21 @@
             this.btnAnterior.UseVisualStyleBackColor = true;
             this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
             // 
+            // pbImagen
+            // 
+            this.pbImagen.Location = new System.Drawing.Point(536, 162);
+            this.pbImagen.Name = "pbImagen";
+            this.pbImagen.Size = new System.Drawing.Size(110, 95);
+            this.pbImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbImagen.TabIndex = 10;
+            this.pbImagen.TabStop = false;
+            // 
             // frmImagenes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pbImagen);
             this.Controls.Add(this.btnAnterior);
             this.Controls.Add(this.btnSiguiente);
             this.Controls.Add(this.btnAceptar);
@@ -150,6 +163,7 @@
             this.Name = "frmImagenes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Imagenes del articulo";
+            ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -167,5 +181,6 @@
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnSiguiente;
         private System.Windows.Forms.Button btnAnterior;
+        private System.Windows.Forms.PictureBox pbImagen;
     }
 }

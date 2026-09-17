@@ -74,5 +74,17 @@ namespace Presentacion
                 lstImagenes.SelectedIndex = indiceActual;
             }
         }
+
+        private void txtImagenLink_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                pbImagen.Load(txtImagenLink.Text);
+            }
+            catch
+            {
+                pbImagen.Image = null;
+            }
+        }
     }
 }
