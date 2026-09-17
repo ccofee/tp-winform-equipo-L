@@ -17,8 +17,15 @@ namespace Presentacion
 
         private void frmMarcas_Load(object sender, EventArgs e)
         {
-            CargarListado();
-            Limpiar();
+            try
+            {
+                CargarListado();
+                Limpiar();
+            }
+            catch (Exception ex)
+            {
+                ManejoErrores.Mostrar(ex, "cargar las marcas");
+            }
         }
 
         private void dgvMarcas_SelectionChanged(object sender, EventArgs e)
@@ -36,14 +43,21 @@ namespace Presentacion
             if (!HayDescripcion())
                 return;
 
-            MarcaNegocio negocio = new MarcaNegocio();
-            Marca nueva = new Marca();
+            try
+            {
+                MarcaNegocio negocio = new MarcaNegocio();
+                Marca nueva = new Marca();
 
-            nueva.Descripcion = txtDescripcion.Text.Trim();
-            negocio.Agregar(nueva);
+                nueva.Descripcion = txtDescripcion.Text.Trim();
+                negocio.Agregar(nueva);
 
-            CargarListado();
-            Limpiar();
+                CargarListado();
+                Limpiar();
+            }
+            catch (Exception ex)
+            {
+                ManejoErrores.Mostrar(ex, "agregar la marca");
+            }
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -59,15 +73,22 @@ namespace Presentacion
             if (!HayDescripcion())
                 return;
 
-            MarcaNegocio negocio = new MarcaNegocio();
-            Marca modificada = new Marca();
+            try
+            {
+                MarcaNegocio negocio = new MarcaNegocio();
+                Marca modificada = new Marca();
 
-            modificada.Id = seleccionada.Id;
-            modificada.Descripcion = txtDescripcion.Text.Trim();
-            negocio.Modificar(modificada);
+                modificada.Id = seleccionada.Id;
+                modificada.Descripcion = txtDescripcion.Text.Trim();
+                negocio.Modificar(modificada);
 
-            CargarListado();
-            Limpiar();
+                CargarListado();
+                Limpiar();
+            }
+            catch (Exception ex)
+            {
+                ManejoErrores.Mostrar(ex, "modificar la marca");
+            }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -80,34 +101,41 @@ namespace Presentacion
                 return;
             }
 
-            MarcaNegocio negocio = new MarcaNegocio();
-            int cantidad = negocio.ContarArticulos(seleccionada.Id);
-
-            if (cantidad > 0)
+            try
             {
-                string detalle = cantidad == 1 ? "la usa 1 artículo" : "la usan " + cantidad + " artículos";
+                MarcaNegocio negocio = new MarcaNegocio();
+                int cantidad = negocio.ContarArticulos(seleccionada.Id);
 
-                MessageBox.Show(
-                    "No se puede eliminar la marca " + seleccionada.Descripcion + ": " + detalle + ".",
+                if (cantidad > 0)
+                {
+                    string detalle = cantidad == 1 ? "la usa 1 artículo" : "la usan " + cantidad + " artículos";
+
+                    MessageBox.Show(
+                        "No se puede eliminar la marca " + seleccionada.Descripcion + ": " + detalle + ".",
+                        "Eliminar marca",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+
+                DialogResult respuesta = MessageBox.Show(
+                    "¿Querés eliminar la marca " + seleccionada.Descripcion + "?",
                     "Eliminar marca",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-                return;
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (respuesta != DialogResult.Yes)
+                    return;
+
+                negocio.Eliminar(seleccionada.Id);
+
+                CargarListado();
+                Limpiar();
             }
-
-            DialogResult respuesta = MessageBox.Show(
-                "¿Querés eliminar la marca " + seleccionada.Descripcion + "?",
-                "Eliminar marca",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (respuesta != DialogResult.Yes)
-                return;
-
-            negocio.Eliminar(seleccionada.Id);
-
-            CargarListado();
-            Limpiar();
+            catch (Exception ex)
+            {
+                ManejoErrores.Mostrar(ex, "eliminar la marca");
+            }
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
