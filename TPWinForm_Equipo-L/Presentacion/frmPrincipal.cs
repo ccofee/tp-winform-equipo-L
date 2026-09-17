@@ -39,7 +39,7 @@ namespace Presentacion
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los artículos." + ex.Message);
+                ManejoErrores.Mostrar(ex, "cargar los artículos del catálogo");
             }
         }
 
@@ -82,7 +82,7 @@ namespace Presentacion
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Aviso al cargar desplegables: " + ex.Message);
+                ManejoErrores.Mostrar(ex, "cargar las marcas y categorías");
             }
 
         }
@@ -142,6 +142,32 @@ namespace Presentacion
         private void btnBuscarAvanzado_Click(object sender, EventArgs e)
         {
 
+            //validaciones previas de precio
+            if (Validacion.TieneTexto(txtPrecioMin.Text) && !Validacion.EsPrecio(txtPrecioMin.Text))
+            {
+                MessageBox.Show("El precio mínimo debe ser un número válido.", "Filtro inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPrecioMin.Focus();
+                return;
+            }
+
+            if (Validacion.TieneTexto(txtPrecioMax.Text) && !Validacion.EsPrecio(txtPrecioMax.Text))
+            {
+                MessageBox.Show("El precio máximo debe ser un número válido.", "Filtro inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPrecioMax.Focus();
+                return;
+            }
+
+            //validacion mismo precio
+            if (Validacion.TieneTexto(txtPrecioMin.Text) && Validacion.TieneTexto(txtPrecioMax.Text))
+            {
+                if (decimal.Parse(txtPrecioMin.Text) > decimal.Parse(txtPrecioMax.Text))
+                {
+                    MessageBox.Show("El precio mínimo no puede ser mayor que el precio máximo.", "Rango inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            //busqueda
             ArticuloNegocio negocio = new ArticuloNegocio();
 
             try
@@ -153,6 +179,7 @@ namespace Presentacion
                     Marca seleccionada = (Marca)cboMarca.SelectedItem;
                     idMarca = seleccionada.Id.ToString();
                 }
+
                 //categoria
                 string idCategoria = "";
                 if (cboCategoria.SelectedIndex != -1)
@@ -175,7 +202,7 @@ namespace Presentacion
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error en la búsqueda avanzada: " + ex.Message);
+                ManejoErrores.Mostrar(ex, "filtrar los artículos");
             }
         }
 
@@ -296,7 +323,7 @@ namespace Presentacion
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al intentar eliminar el artículo: " + ex.Message);
+                    ManejoErrores.Mostrar(ex, "eliminar el artículo seleccionado");
                 }
             }
         }
