@@ -307,6 +307,8 @@ namespace Negocio
         }
         public void eliminar(int id)
         {
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
+            imagenNegocio.eliminarPorArticulo(id);
             AccesoDatos datos = new AccesoDatos();
 
             try

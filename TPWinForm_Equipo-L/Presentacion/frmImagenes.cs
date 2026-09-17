@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Dominio;
+using Negocio;
 
 namespace Presentacion
 {
@@ -15,11 +16,16 @@ namespace Presentacion
     {
         private List<Imagen> imagenes = new List<Imagen>();
         private int indiceActual = 0;
+        private int idArticulo;
         public frmImagenes()
         {
             InitializeComponent();
         }
-
+        public frmImagenes(int idArticulo)
+        {
+            InitializeComponent();
+            this.idArticulo = idArticulo;
+        }
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             Imagen imagen = new Imagen();
@@ -85,6 +91,43 @@ namespace Presentacion
             {
                 pbImagen.Image = null;
             }
+        }
+        private void frmImagenes_Load(object sender, EventArgs e)
+        {
+            if (idArticulo > 0)
+            {
+                ImagenNegocio negocio = new ImagenNegocio();
+
+                imagenes = negocio.listarPorArticulo(idArticulo);
+
+                lstImagenes.Items.Clear();
+
+                foreach (Imagen imagen in imagenes)
+                {
+                    lstImagenes.Items.Add(imagen);
+                }
+
+                if (imagenes.Count > 0)
+                {
+                    indiceActual = 0;
+                    lstImagenes.SelectedIndex = indiceActual;
+                }
+            }
+        }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            ImagenNegocio negocio = new ImagenNegocio();
+
+            negocio.eliminarPorArticulo(idArticulo);
+
+            foreach (Imagen imagen in imagenes)
+            {
+                imagen.IdArticulo = idArticulo;
+                negocio.agregar(imagen);
+            }
+
+            Close();
         }
     }
 }
