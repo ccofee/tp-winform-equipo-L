@@ -82,12 +82,14 @@
             this.marcasToolStripMenuItem.Name = "marcasToolStripMenuItem";
             this.marcasToolStripMenuItem.Size = new System.Drawing.Size(70, 24);
             this.marcasToolStripMenuItem.Text = "Marcas";
+            this.marcasToolStripMenuItem.Click += new System.EventHandler(this.marcasToolStripMenuItem_Click);
             // 
             // categoríasToolStripMenuItem
             // 
             this.categoríasToolStripMenuItem.Name = "categoríasToolStripMenuItem";
             this.categoríasToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
             this.categoríasToolStripMenuItem.Text = "Categorías";
+            this.categoríasToolStripMenuItem.Click += new System.EventHandler(this.categoríasToolStripMenuItem_Click);
             // 
             // dgvArticulos
             // 

@@ -220,5 +220,19 @@ namespace Presentacion
             }
 
         }
+
+        private void marcasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmMarcas ventana = new frmMarcas();
+            ventana.ShowDialog();
+            cargarDesplegables();
+        }
+
+        private void categoríasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCategorias ventana = new frmCategorias();
+            ventana.ShowDialog();
+            cargarDesplegables();
+        }
     }
 }
