@@ -78,6 +78,8 @@ namespace Presentacion
                 nuevo.Categoria = (Categoria)cboCategoria.SelectedItem;
 
                 nuevo.Id = negocio.agregar(nuevo);
+                frmImagenes ventanaImagenes = new frmImagenes(nuevo.Id);
+                ventanaImagenes.ShowDialog();
 
                 MessageBox.Show("Artículo agregado correctamente. Id: " + nuevo.Id);
             }
@@ -100,6 +102,15 @@ namespace Presentacion
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void btnImagenes_Click(object sender, EventArgs e)
+        {
+            if (articulo != null && articulo.Id > 0)
+            {
+                frmImagenes ventana = new frmImagenes(articulo.Id);
+                ventana.ShowDialog();
+            }
         }
     }
 }
