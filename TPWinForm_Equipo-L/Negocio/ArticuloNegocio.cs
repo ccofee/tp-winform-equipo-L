@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Dominio;
+using Negocio;
+using System;
 using System.Collections.Generic;
-using Dominio;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,73 +36,73 @@ namespace Negocio
                 datos.EjecutarLectura();
 
                 while (datos.Lector.Read())
-                        {
-                            Articulo aux = new Articulo();
+                {
+                    Articulo aux = new Articulo();
 
-                            aux.Id = (int)datos.Lector["Id"];
+                    aux.Id = (int)datos.Lector["Id"];
 
-                            //validacion de null para codigo
-                            if (!(datos.Lector["Codigo"] is DBNull))
-                                aux.Codigo = (string)datos.Lector["Codigo"];
-                            else
-                                aux.Codigo = string.Empty;
+                    //validacion de null para codigo
+                    if (!(datos.Lector["Codigo"] is DBNull))
+                        aux.Codigo = (string)datos.Lector["Codigo"];
+                    else
+                        aux.Codigo = string.Empty;
 
-                            //validacion de nombre
-                            if (!(datos.Lector["Nombre"] is DBNull))
-                                aux.Nombre = (string)datos.Lector["Nombre"];
-                            else
-                                aux.Nombre = string.Empty;
+                    //validacion de nombre
+                    if (!(datos.Lector["Nombre"] is DBNull))
+                        aux.Nombre = (string)datos.Lector["Nombre"];
+                    else
+                        aux.Nombre = string.Empty;
 
-                            //validacion de descripcion
-                            if (!(datos.Lector["DescArticulo"] is DBNull))
-                                aux.Descripcion = (string)datos.Lector["DescArticulo"];
-                            else
-                                aux.Descripcion = string.Empty;
+                    //validacion de descripcion
+                    if (!(datos.Lector["DescArticulo"] is DBNull))
+                        aux.Descripcion = (string)datos.Lector["DescArticulo"];
+                    else
+                        aux.Descripcion = string.Empty;
 
-                            //validacion de precio
-                            if (!(datos.Lector["Precio"] is DBNull))
-                                aux.Precio = (decimal)datos.Lector["Precio"];
-                            else
-                                aux.Precio = 0;
+                    //validacion de precio
+                    if (!(datos.Lector["Precio"] is DBNull))
+                        aux.Precio = (decimal)datos.Lector["Precio"];
+                    else
+                        aux.Precio = 0;
 
-                            //validacion de MARCA
-                            aux.Marca = new Marca();
+                    //validacion de MARCA
+                    aux.Marca = new Marca();
 
-                            if (!(datos.Lector["IdMarca"] is DBNull))
-                            {
-                                aux.Marca.Id = (int)datos.Lector["IdMarca"];
+                    if (!(datos.Lector["IdMarca"] is DBNull))
+                    {
+                        aux.Marca.Id = (int)datos.Lector["IdMarca"];
 
-                                if (!(datos.Lector["Marca"] is DBNull))
-                                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
-                                else
-                                    aux.Marca.Descripcion = "Sin Marca";
-                            }
-                            else
-                            {
-                                aux.Marca.Descripcion = "Sin Marca";
-                            }
-
-                            //validacion de CATEGORIA
-                            aux.Categoria = new Categoria();
-
-                            if (!(datos.Lector["IdCategoria"] is DBNull))
-                            {
-                                aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
-
-                                if (!(datos.Lector["Categoria"] is DBNull))
-                                    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
-                                else
-                                    aux.Categoria.Descripcion = "Sin Categoría";
-                            }
-                            else
-                            {
-                                aux.Categoria.Descripcion = "Sin Categoría";
-                            }
-
-                        lista.Add(aux);
+                        if (!(datos.Lector["Marca"] is DBNull))
+                            aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+                        else
+                            aux.Marca.Descripcion = "Sin Marca";
+                    }
+                    else
+                    {
+                        aux.Marca.Descripcion = "Sin Marca";
                     }
 
-                    return lista;
+                    //validacion de CATEGORIA
+                    aux.Categoria = new Categoria();
+
+                    if (!(datos.Lector["IdCategoria"] is DBNull))
+                    {
+                        aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
+
+                        if (!(datos.Lector["Categoria"] is DBNull))
+                            aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+                        else
+                            aux.Categoria.Descripcion = "Sin Categoría";
+                    }
+                    else
+                    {
+                        aux.Categoria.Descripcion = "Sin Categoría";
+                    }
+
+                    lista.Add(aux);
+                }
+
+                return lista;
 
             }
             catch (Exception ex)
@@ -191,7 +192,7 @@ namespace Negocio
                     if (!(datos.Lector["IdMarca"] is DBNull))
                     {
                         aux.Marca.Id = (int)datos.Lector["IdMarca"];
-                        if (!(datos.Lector["Marca"] is DBNull)) 
+                        if (!(datos.Lector["Marca"] is DBNull))
                             aux.Marca.Descripcion = (string)datos.Lector["Marca"];
                         else
                             aux.Marca.Descripcion = "Sin Marca";
@@ -205,7 +206,7 @@ namespace Negocio
                     if (!(datos.Lector["IdCategoria"] is DBNull))
                     {
                         aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
-                        if (!(datos.Lector["Categoria"] is DBNull)) 
+                        if (!(datos.Lector["Categoria"] is DBNull))
                             aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
                         else
                             aux.Categoria.Descripcion = "Sin Categoría";
@@ -227,7 +228,7 @@ namespace Negocio
             }
             finally
             {
-                datos.cerrarConexion(); 
+                datos.cerrarConexion();
             }
 
 
@@ -238,8 +239,38 @@ namespace Negocio
 
 
 
+
+        public int agregar(Articulo nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string consulta = @"INSERT INTO ARTICULOS 
+                            (Codigo, Nombre, Descripcion, IdMarca, IdCategoria, Precio)
+                            VALUES
+                            (@codigo, @nombre, @descripcion, @idMarca, @idCategoria, @precio);
+                            SELECT SCOPE_IDENTITY();";
+
+                datos.SetearConsulta(consulta);
+
+                datos.setearParametro("@codigo", nuevo.Codigo);
+                datos.setearParametro("@nombre", nuevo.Nombre);
+                datos.setearParametro("@descripcion", nuevo.Descripcion);
+                datos.setearParametro("@idMarca", nuevo.Marca.Id);
+                datos.setearParametro("@idCategoria", nuevo.Categoria.Id);
+                datos.setearParametro("@precio", nuevo.Precio);
+
+                datos.EjecutarLectura();
+
+                datos.Lector.Read();
+
+                return Convert.ToInt32(datos.Lector[0]);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
-
-
 }
-
