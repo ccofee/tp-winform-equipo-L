@@ -99,7 +99,24 @@ namespace Presentacion
                 MessageBox.Show("Debe seleccionar una categoría.");
                 return;
             }
+            
             ArticuloNegocio negocio = new ArticuloNegocio();
+            if (articulo == null)
+            {
+                if (negocio.existeCodigo(txtCodigo.Text))
+                {
+                    MessageBox.Show("Ya existe un artículo con ese código.");
+                    return;
+                }
+            }
+            else
+            {
+                if (negocio.existeCodigo(txtCodigo.Text, articulo.Id))
+                {
+                    MessageBox.Show("Ya existe otro artículo con ese código.");
+                    return;
+                }
+            }
 
             if (articulo == null)
             { 
