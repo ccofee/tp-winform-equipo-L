@@ -14,7 +14,7 @@ namespace Presentacion
     public partial class frmImagenes : Form
     {
         private List<Imagen> imagenes = new List<Imagen>();
-
+        private int indiceActual = 0;
         public frmImagenes()
         {
             InitializeComponent();
@@ -47,6 +47,32 @@ namespace Presentacion
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            if (imagenes.Count > 0)
+            {
+                indiceActual++;
+
+                if (indiceActual >= imagenes.Count)
+                    indiceActual = 0;
+
+                lstImagenes.SelectedIndex = indiceActual;
+            }
+        }
+
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
+            if (imagenes.Count > 0)
+            {
+                indiceActual--;
+
+                if (indiceActual < 0)
+                    indiceActual = imagenes.Count - 1;
+
+                lstImagenes.SelectedIndex = indiceActual;
+            }
         }
     }
 }
