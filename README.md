@@ -25,7 +25,7 @@ información persistida en SQL Server.
 
 ### 1. Restaurar la base de datos
 
-El script está en [`db/CATALOGO_DB_v3.sql`](db/CATALOGO_DB_v3.sql), tal como lo entregó la cátedra.
+El script está en [`db/CATALOGO_DB_v3.sql`](db/CATALOGO_DB_v3.sql).
 
 1. Abrir SSMS y conectarse a la instancia local de SQL Server.
 2. Abrir el script y ejecutarlo completo (`F5`).
@@ -69,12 +69,10 @@ Para ver qué instancias tenés instaladas y si están corriendo, desde PowerShe
 Get-Service | Where-Object { $_.Name -like 'MSSQL*' } | Select-Object Name, Status
 ```
 
-Dos advertencias:
+Advertencia:
 
 - Después de editar `App.config` hay que **recompilar**. En ejecución la aplicación no lee ese
   archivo, sino la copia que Visual Studio genera en `bin\Debug\Presentacion.exe.config`.
-- La cadena está versionada en el repositorio. Si la ajustás para tu máquina, **no subas ese
-  cambio**, porque se la rompés al resto del equipo.
 
 ### 3. Ejecutar la aplicación
 
@@ -107,13 +105,3 @@ La solución tiene tres proyectos, uno por capa:
 El acceso a datos es **ADO.NET puro** (`SqlConnection`, `SqlCommand`, `SqlDataReader`), sin ORM, y
 todas las consultas usan parámetros.
 
-## Notas sobre la base de datos
-
-El script es el que entregó la cátedra y **no lo modificamos**, así que conviene saber dos cosas:
-
-- **No tiene claves foráneas ni restricciones de unicidad.** Nada impide a nivel de base borrar una
-  marca en uso, dejar imágenes huérfanas o repetir el código de un artículo. Esas reglas las aplica
-  la capa de negocio de la aplicación.
-- **Los datos de prueba vienen con una inconsistencia:** el artículo *Moto G Play* apunta a la
-  categoría 5, que no existe, porque `CATEGORIAS` tiene solo 4 filas. La aplicación lo tolera: el
-  artículo aparece igual en el listado, con la categoría vacía.
