@@ -105,3 +105,7 @@ La solución tiene tres proyectos, uno por capa:
 El acceso a datos es **ADO.NET puro** (`SqlConnection`, `SqlCommand`, `SqlDataReader`), sin ORM, y
 todas las consultas usan parámetros.
 
+## Pruebas
+
+La planilla de casos de prueba manuales está en
+[`db/casos-de-prueba.md`](db/casos-de-prueba.md).
