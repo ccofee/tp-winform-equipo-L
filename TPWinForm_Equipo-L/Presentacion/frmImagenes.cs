@@ -28,9 +28,16 @@ namespace Presentacion
         }
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            if (!Validacion.EsUrl(txtImagenLink.Text))
+            {
+                MessageBox.Show("Ingresá una URL que empiece con http o https.", "Imágenes");
+                txtImagenLink.Focus();
+                return;
+            }
+
             Imagen imagen = new Imagen();
 
-            imagen.ImagenUrl = txtImagenLink.Text;
+            imagen.ImagenUrl = txtImagenLink.Text.Trim();
 
             imagenes.Add(imagen);
 
@@ -94,40 +101,54 @@ namespace Presentacion
         }
         private void frmImagenes_Load(object sender, EventArgs e)
         {
-            if (idArticulo > 0)
+            try
             {
-                ImagenNegocio negocio = new ImagenNegocio();
-
-                imagenes = negocio.listarPorArticulo(idArticulo);
-
-                lstImagenes.Items.Clear();
-
-                foreach (Imagen imagen in imagenes)
+                if (idArticulo > 0)
                 {
-                    lstImagenes.Items.Add(imagen);
-                }
+                    ImagenNegocio negocio = new ImagenNegocio();
 
-                if (imagenes.Count > 0)
-                {
-                    indiceActual = 0;
-                    lstImagenes.SelectedIndex = indiceActual;
+                    imagenes = negocio.listarPorArticulo(idArticulo);
+
+                    lstImagenes.Items.Clear();
+
+                    foreach (Imagen imagen in imagenes)
+                    {
+                        lstImagenes.Items.Add(imagen);
+                    }
+
+                    if (imagenes.Count > 0)
+                    {
+                        indiceActual = 0;
+                        lstImagenes.SelectedIndex = indiceActual;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                ManejoErrores.Mostrar(ex, "cargar las imágenes del artículo");
             }
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            ImagenNegocio negocio = new ImagenNegocio();
-
-            negocio.eliminarPorArticulo(idArticulo);
-
-            foreach (Imagen imagen in imagenes)
+            try
             {
-                imagen.IdArticulo = idArticulo;
-                negocio.agregar(imagen);
-            }
+                ImagenNegocio negocio = new ImagenNegocio();
 
-            Close();
+                negocio.eliminarPorArticulo(idArticulo);
+
+                foreach (Imagen imagen in imagenes)
+                {
+                    imagen.IdArticulo = idArticulo;
+                    negocio.agregar(imagen);
+                }
+
+                Close();
+            }
+            catch (Exception ex)
+            {
+                ManejoErrores.Mostrar(ex, "guardar las imágenes");
+            }
         }
     }
 }

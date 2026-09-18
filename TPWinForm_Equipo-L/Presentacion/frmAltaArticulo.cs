@@ -22,43 +22,50 @@ namespace Presentacion
         }
         private void frmAltaArticulo_Load(object sender, EventArgs e)
         {
-            MarcaNegocio marcaNegocio = new MarcaNegocio();
-            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-
-            List<Marca> marcas = marcaNegocio.Listar();
-            cboMarca.DataSource = marcas;
-
-            List<Categoria> categorias = categoriaNegocio.Listar();
-            cboCategoria.DataSource = categorias;
-            if (articulo != null)
+            try
             {
-                Text = "Modificar artículo";
-                lblTitulo.Text = "Modificar artículo";
-                txtCodigo.Text = articulo.Codigo;
-                txtNombre.Text = articulo.Nombre;
-                txtDescripcion.Text = articulo.Descripcion;
-                txtPrecio.Text = articulo.Precio.ToString();
+                MarcaNegocio marcaNegocio = new MarcaNegocio();
+                CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
 
-                for (int i = 0; i < cboMarca.Items.Count; i++)
+                List<Marca> marcas = marcaNegocio.Listar();
+                cboMarca.DataSource = marcas;
+
+                List<Categoria> categorias = categoriaNegocio.Listar();
+                cboCategoria.DataSource = categorias;
+                if (articulo != null)
                 {
-                    Marca marca = (Marca)cboMarca.Items[i];
+                    Text = "Modificar artículo";
+                    lblTitulo.Text = "Modificar artículo";
+                    txtCodigo.Text = articulo.Codigo;
+                    txtNombre.Text = articulo.Nombre;
+                    txtDescripcion.Text = articulo.Descripcion;
+                    txtPrecio.Text = articulo.Precio.ToString();
 
-                    if (marca.Id == articulo.Marca.Id)
+                    for (int i = 0; i < cboMarca.Items.Count; i++)
                     {
-                        cboMarca.SelectedIndex = i;
-                        break;
+                        Marca marca = (Marca)cboMarca.Items[i];
+
+                        if (marca.Id == articulo.Marca.Id)
+                        {
+                            cboMarca.SelectedIndex = i;
+                            break;
+                        }
+                    }
+                    for (int i = 0; i < cboCategoria.Items.Count; i++)
+                    {
+                        Categoria categoria = (Categoria)cboCategoria.Items[i];
+
+                        if (categoria.Id == articulo.Categoria.Id)
+                        {
+                            cboCategoria.SelectedIndex = i;
+                            break;
+                        }
                     }
                 }
-                for (int i = 0; i < cboCategoria.Items.Count; i++)
-                {
-                    Categoria categoria = (Categoria)cboCategoria.Items[i];
-
-                    if (categoria.Id == articulo.Categoria.Id)
-                    {
-                        cboCategoria.SelectedIndex = i;
-                        break;
-                    }
-                }
+            }
+            catch (Exception ex)
+            {
+                ManejoErrores.Mostrar(ex, "cargar las marcas y categorías");
             }
         }
 
@@ -100,56 +107,63 @@ namespace Presentacion
                 return;
             }
             
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            if (articulo == null)
+            try
             {
-                if (negocio.existeCodigo(txtCodigo.Text))
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                if (articulo == null)
                 {
-                    MessageBox.Show("Ya existe un artículo con ese código.");
-                    return;
+                    if (negocio.existeCodigo(txtCodigo.Text))
+                    {
+                        MessageBox.Show("Ya existe un artículo con ese código.");
+                        return;
+                    }
                 }
-            }
-            else
-            {
-                if (negocio.existeCodigo(txtCodigo.Text, articulo.Id))
+                else
                 {
-                    MessageBox.Show("Ya existe otro artículo con ese código.");
-                    return;
+                    if (negocio.existeCodigo(txtCodigo.Text, articulo.Id))
+                    {
+                        MessageBox.Show("Ya existe otro artículo con ese código.");
+                        return;
+                    }
                 }
+
+                if (articulo == null)
+                { 
+                    Articulo nuevo = new Articulo();
+
+                    nuevo.Codigo = txtCodigo.Text;
+                    nuevo.Nombre = txtNombre.Text;
+                    nuevo.Descripcion = txtDescripcion.Text;
+                    nuevo.Precio = decimal.Parse(txtPrecio.Text);
+                    nuevo.Marca = (Marca)cboMarca.SelectedItem;
+                    nuevo.Categoria = (Categoria)cboCategoria.SelectedItem;
+
+                    nuevo.Id = negocio.agregar(nuevo);
+                    frmImagenes ventanaImagenes = new frmImagenes(nuevo.Id);
+                    ventanaImagenes.ShowDialog();
+
+                    MessageBox.Show("Artículo agregado correctamente. Id: " + nuevo.Id);
+                }
+                else
+                {
+                    articulo.Codigo = txtCodigo.Text;
+                    articulo.Nombre = txtNombre.Text;
+                    articulo.Descripcion = txtDescripcion.Text;
+                    articulo.Precio = decimal.Parse(txtPrecio.Text);
+                    articulo.Marca = (Marca)cboMarca.SelectedItem;
+                    articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
+
+                    negocio.modificar(articulo);
+
+                    MessageBox.Show("Artículo modificado correctamente.");
+                }
+
+                Close();
             }
-
-            if (articulo == null)
-            { 
-                Articulo nuevo = new Articulo();
-
-                nuevo.Codigo = txtCodigo.Text;
-                nuevo.Nombre = txtNombre.Text;
-                nuevo.Descripcion = txtDescripcion.Text;
-                nuevo.Precio = decimal.Parse(txtPrecio.Text);
-                nuevo.Marca = (Marca)cboMarca.SelectedItem;
-                nuevo.Categoria = (Categoria)cboCategoria.SelectedItem;
-
-                nuevo.Id = negocio.agregar(nuevo);
-                frmImagenes ventanaImagenes = new frmImagenes(nuevo.Id);
-                ventanaImagenes.ShowDialog();
-
-                MessageBox.Show("Artículo agregado correctamente. Id: " + nuevo.Id);
-            }
-            else
+            catch (Exception ex)
             {
-                articulo.Codigo = txtCodigo.Text;
-                articulo.Nombre = txtNombre.Text;
-                articulo.Descripcion = txtDescripcion.Text;
-                articulo.Precio = decimal.Parse(txtPrecio.Text);
-                articulo.Marca = (Marca)cboMarca.SelectedItem;
-                articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
-
-                negocio.modificar(articulo);
-
-                MessageBox.Show("Artículo modificado correctamente.");
+                ManejoErrores.Mostrar(ex, articulo == null ? "agregar el artículo" : "modificar el artículo");
             }
-
-            Close();
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -158,10 +172,17 @@ namespace Presentacion
 
         private void btnImagenes_Click(object sender, EventArgs e)
         {
-            if (articulo != null && articulo.Id > 0)
+            try
             {
-                frmImagenes ventana = new frmImagenes(articulo.Id);
-                ventana.ShowDialog();
+                if (articulo != null && articulo.Id > 0)
+                {
+                    frmImagenes ventana = new frmImagenes(articulo.Id);
+                    ventana.ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                ManejoErrores.Mostrar(ex, "abrir las imágenes del artículo");
             }
         }
     }
